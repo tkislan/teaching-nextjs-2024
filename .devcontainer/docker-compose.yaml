@@ -1,0 +1,16 @@
+version: '2.4'
+services:
+  dev:
+    build:
+      context: ..
+      target: dev
+      dockerfile: .devcontainer/Dockerfile
+    working_dir: /home/node/app
+    command: /bin/sh -c "while sleep 1; do :; done"
+    environment: {}
+    volumes:
+      - ..:/home/node/app
+      - $HOME/.ssh:/root/.ssh
+      - bash_history:/commandhistory
+volumes:
+  bash_history:

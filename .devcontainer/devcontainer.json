@@ -1,0 +1,23 @@
+{
+    "name": "Teaching NextJS - 2024",
+    "dockerComposeFile": [
+        "docker-compose.yaml"
+    ],
+    "service": "dev",
+    "workspaceFolder": "/home/node/app",
+    "remoteUser": "root",
+    "shutdownAction": "stopCompose",
+    "customizations": {
+        "vscode": {
+            "extensions": [
+                "github.copilot",
+                "ms-vsliveshare.vsliveshare"
+            ],
+            "settings": {
+                "terminal.integrated.defaultProfile.linux": "bash"
+            }
+        }
+    },
+    "features": {},
+    "postCreateCommand": "git config --global --add safe.directory /home/node/app"
+}
