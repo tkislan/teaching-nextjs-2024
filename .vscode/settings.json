@@ -21,7 +21,7 @@
             "previewLimit": 50,
             "driver": "SQLite",
             "name": "Local",
-            "database": "data/app.db"
+            "database": "db.sqlite"
         }
     ],
     "editor.tabSize": 2,
