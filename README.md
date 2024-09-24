@@ -41,6 +41,13 @@ npm run db:migrate:make
 ```
 
 Generate DB typescript definitions models for Kysely query builder
+
 ```bash
 npm run db:codegen
+```
+
+Run DB seed script
+
+```bash
+npm run db:seed:run
 ```
