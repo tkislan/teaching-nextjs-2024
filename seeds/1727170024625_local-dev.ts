@@ -3,12 +3,27 @@ import { faker } from "@faker-js/faker";
 import { DB } from "../src/lib/db-types";
 
 export async function seed(db: Kysely<DB>): Promise<void> {
+  await db.deleteFrom("comments").execute();
   await db.deleteFrom("posts").execute();
   await db.deleteFrom("users").execute();
 
   const numberOfUsers = 20;
 
   const users = [];
+
+  const myUser = await db
+    .insertInto("users")
+    .values({
+      id: 1,
+      username: faker.internet.userName(),
+      email: faker.internet.email(),
+      displayName: faker.internet.displayName(),
+    })
+    .returningAll()
+    .executeTakeFirstOrThrow();
+
+  users.push(myUser);
+
   for (let i = 0; i < numberOfUsers; i++) {
     const user = await db
       .insertInto("users")
@@ -25,7 +40,7 @@ export async function seed(db: Kysely<DB>): Promise<void> {
 
   const posts = [];
   for (const user of users) {
-    const numberOfPosts = 7;
+    const numberOfPosts = faker.number.int({ min: 0, max: 20 });
 
     for (let i = 0; i < numberOfPosts; i++) {
       const post = await db
@@ -39,6 +54,26 @@ export async function seed(db: Kysely<DB>): Promise<void> {
         .executeTakeFirstOrThrow();
 
       posts.push(post);
+    }
+  }
+
+  for (const post of posts) {
+    for (const user of users) {
+      const shouldCreateComment = faker.datatype.boolean(0.1);
+
+      if (shouldCreateComment) {
+        await db
+          .insertInto("comments")
+          .values({
+            userId: user.id,
+            postId: post.id,
+            content: faker.lorem.sentences(2),
+            createdAt: faker.date
+              .between({ from: new Date(post.createdAt), to: new Date() })
+              .getTime(),
+          })
+          .execute();
+      }
     }
   }
 }

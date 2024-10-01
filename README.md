@@ -51,3 +51,9 @@ Run DB seed script
 ```bash
 npm run db:seed:run
 ```
+
+Run custom scripts
+
+```bash
+npm run scripts:run
+```
