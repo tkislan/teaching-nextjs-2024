@@ -26,6 +26,7 @@
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
+    "daisyui": "^4.12.12",
     "eslint": "^8",
     "eslint-config-next": "14.2.9",
     "kysely-codegen": "^0.16.8",

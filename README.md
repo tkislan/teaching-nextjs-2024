@@ -5,6 +5,7 @@
 ```bash
 npm install
 npm run db:migrate:latest
+npm run db:seed:run
 npm run dev
 ```
 
