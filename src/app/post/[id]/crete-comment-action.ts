@@ -1,11 +1,12 @@
 "use server";
 
 import { CamelCasePlugin, Kysely } from "kysely";
-import { DB } from "../../lib/db-types";
-import { dialect } from "../../lib/db";
+import { DB } from "../../../lib/db-types";
+import { dialect } from "../../../lib/db";
 import { redirect } from "next/navigation";
+import { revalidatePath } from "next/cache";
 
-export async function createPost(content: string) {
+export async function createComment(content: string, postId: number) {
   console.log(`Creating post with text: ${content}`);
 
   const db = new Kysely<DB>({
@@ -14,9 +15,10 @@ export async function createPost(content: string) {
   });
 
   const newPost = await db
-    .insertInto("posts")
+    .insertInto("comments")
     .values({
       userId: 1,
+      postId: postId,
       content: content,
       createdAt: new Date().getTime(),
     })
@@ -25,8 +27,5 @@ export async function createPost(content: string) {
 
   console.log(newPost);
 
-
-  redirect(`/post/${newPost.id}`); //redirect to newly created post
-
-
+  revalidatePath("/post/${postId}"); //refresh
 }

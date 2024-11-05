@@ -1,11 +1,12 @@
 import { CamelCasePlugin, Kysely } from "kysely";
 import { DB } from "../../../lib/db-types";
 import { dialect } from "../../../lib/db";
+import { NewCommentForm } from "./newCommentForm";
 
 type Props = { params: { id: string } };
 
 export default async function PostDetail(props: Props) {
-  console.log(`PostDetail id: ${props.params.id}`);
+  console.log(`PostDetail id: ${props.params.id} `);
 
   const id = parseInt(props.params.id);
 
@@ -46,6 +47,8 @@ export default async function PostDetail(props: Props) {
         </div>
         <p>{new Date(postWithUser.createdAt).toLocaleString()}</p>
         <p>{postWithUser.displayName ?? postWithUser.username}</p>
+        <br />
+        <NewCommentForm postId={postWithUser.id} />
         <br />
         <ul className="list-disc">
           {commentsWithUsers.map((c) => (
