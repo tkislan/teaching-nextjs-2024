@@ -42,7 +42,9 @@ export default async function PostDetail(props: Props) {
   return (
     <div className="card bg-base-100 w-96 drop-shadow-md">
       <div className="card-body">
-        <p>{postWithUser.content}</p>
+        <div style={{ whiteSpace: "break-spaces" }}>
+          <p>{postWithUser.content}</p>
+        </div>
         <p>{new Date(postWithUser.createdAt).toLocaleString()}</p>
         <p>{postWithUser.displayName ?? postWithUser.username}</p>
         <br />

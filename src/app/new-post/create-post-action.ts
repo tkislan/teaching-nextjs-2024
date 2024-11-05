@@ -25,5 +25,8 @@ export async function createPost(content: string) {
 
   console.log(newPost);
 
+
   redirect(`/post/${newPost.id}`); //redirect to newly created post
+
+
 }

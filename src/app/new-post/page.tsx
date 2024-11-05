@@ -1,4 +1,6 @@
+
 import { NewPostForm } from "./newPostForm";
+
 
 export default async function NewPostPage() {
   console.log("NewPostPage");
