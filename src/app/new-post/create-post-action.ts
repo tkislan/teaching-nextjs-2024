@@ -1,17 +1,12 @@
 "use server";
 
-import { CamelCasePlugin, Kysely } from "kysely";
-import { DB } from "../../lib/db-types";
-import { dialect } from "../../lib/db";
+import { createDB } from "../../lib/db";
 import { redirect } from "next/navigation";
 
 export async function createPost(content: string) {
   console.log(`Creating post with text: ${content}`);
 
-  const db = new Kysely<DB>({
-    dialect: dialect,
-    plugins: [new CamelCasePlugin()],
-  });
+  const db = createDB();
 
   const newPost = await db
     .insertInto("posts")

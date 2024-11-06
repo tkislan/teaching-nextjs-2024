@@ -1,8 +1,6 @@
 "use server";
 
-import { CamelCasePlugin, Kysely } from "kysely";
-import { DB } from "../../../lib/db-types";
-import { dialect } from "../../../lib/db";
+import { createDB } from "../../../lib/db";
 import { revalidatePath } from "next/cache";
 
 export async function createComment(postId: number, content: string) {
@@ -10,10 +8,7 @@ export async function createComment(postId: number, content: string) {
     `Creating comment for post id: ${postId}, with content: ${content}`
   );
 
-  const db = new Kysely<DB>({
-    dialect: dialect,
-    plugins: [new CamelCasePlugin()],
-  });
+  const db = createDB();
 
   await db
     .insertInto("comments")

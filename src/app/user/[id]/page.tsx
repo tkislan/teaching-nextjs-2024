@@ -1,6 +1,4 @@
-import { CamelCasePlugin, Kysely } from "kysely";
-import { DB } from "../../../lib/db-types";
-import { dialect } from "../../../lib/db";
+import { createDB } from "../../../lib/db";
 
 type Props = { params: { id: string } };
 
@@ -15,10 +13,7 @@ export default async function PostDetail(props: Props) {
 
   console.log(id);
 
-  const db = new Kysely<DB>({
-    dialect: dialect,
-    plugins: [new CamelCasePlugin()],
-  });
+  const db = createDB();
 
   const user = await db
     .selectFrom("users")
