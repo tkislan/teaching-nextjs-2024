@@ -1,6 +1,7 @@
 import { CamelCasePlugin, Kysely } from "kysely";
 import { DB } from "../../../lib/db-types";
 import { dialect } from "../../../lib/db";
+import Link from "next/link";
 
 type Props = { params: { id: string } };
 
@@ -45,12 +46,18 @@ export default async function PostDetail(props: Props) {
           <p>{postWithUser.content}</p>
         </div>
         <p>{new Date(postWithUser.createdAt).toLocaleString()}</p>
-        <p>{postWithUser.displayName ?? postWithUser.username}</p>
+        <Link href={`/user/${postWithUser.userId}`}>
+          {postWithUser.displayName ?? postWithUser.username}
+        </Link>
         <br />
+        {commentsWithUsers.length === 0 ? <div>- No Comments - </div> : null}
         <ul className="list-disc">
           {commentsWithUsers.map((c) => (
             <li key={c.id}>
-              {c.content} [{c.displayName ?? c.username}]
+              {c.content}{" "}
+              <Link href={`/user/${c.userId}`}>
+                [{c.displayName ?? c.username}]
+              </Link>
             </li>
           ))}
         </ul>

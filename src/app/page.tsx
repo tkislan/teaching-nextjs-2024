@@ -19,16 +19,16 @@ export default async function Home() {
     <div>
       {posts.map((p) => (
         <div key={p.id} className="card bg-base-100 w-96 drop-shadow-md">
-          <Link href={`/post/${p.id}`}>
-            <div className="card-body">
+          <div className="card-body">
+            <Link href={`/post/${p.id}`}>
               <p>{p.content}</p>
               <p>{new Date(p.createdAt).toString()}</p>
-              <p>
-                {p.userId}
-                {p.userId === 1 ? " *" : ""}
-              </p>
-            </div>
-          </Link>
+            </Link>
+            <Link href={`/user/${p.userId}`}>
+              {p.userId}
+              {p.userId === 1 ? " *" : ""}
+            </Link>
+          </div>
         </div>
       ))}
     </div>
