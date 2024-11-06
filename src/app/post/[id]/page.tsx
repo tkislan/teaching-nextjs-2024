@@ -2,6 +2,7 @@ import { CamelCasePlugin, Kysely } from "kysely";
 import { DB } from "../../../lib/db-types";
 import { dialect } from "../../../lib/db";
 import Link from "next/link";
+import { NewCommentForm } from "./NewCommentForm";
 
 type Props = { params: { id: string } };
 
@@ -61,6 +62,7 @@ export default async function PostDetail(props: Props) {
             </li>
           ))}
         </ul>
+        <NewCommentForm postId={postWithUser.id} />
       </div>
     </div>
   );
