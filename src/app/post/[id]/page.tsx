@@ -1,5 +1,6 @@
-import { createDB } from "../../../lib/db";
 import Link from "next/link";
+import { createDB } from "../../../lib/db";
+import { DeletePostButton } from "./DeletePostButton";
 import { NewCommentForm } from "./NewCommentForm";
 
 type Props = { params: { id: string } };
@@ -45,6 +46,12 @@ export default async function PostDetail(props: Props) {
         <Link href={`/user/${postWithUser.userId}`}>
           {postWithUser.displayName ?? postWithUser.username}
         </Link>
+        <div className="flex flex-row gap-4">
+          <Link className="btn btn-sm" href={`/post/${postWithUser.id}/edit`}>
+            Edit
+          </Link>
+          <DeletePostButton id={postWithUser.id} />
+        </div>
         <br />
         {commentsWithUsers.length === 0 ? <div>- No Comments - </div> : null}
         <ul className="list-disc">

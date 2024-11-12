@@ -4,12 +4,12 @@ import { useForm } from "react-hook-form";
 
 import { createPost } from "./create-post-action";
 
-interface FormValue {
+interface FormValues {
   content: string;
 }
 
 export function NewPostForm() {
-  const { register, handleSubmit } = useForm<FormValue>();
+  const { register, handleSubmit } = useForm<FormValues>();
 
   return (
     <form
