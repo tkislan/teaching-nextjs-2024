@@ -28,6 +28,7 @@ export interface Users {
   displayName: string | null;
   email: string;
   id: Generated<number>;
+  password: string | null;
   username: string;
 }
 

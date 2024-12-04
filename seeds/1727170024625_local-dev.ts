@@ -1,5 +1,5 @@
-import type { Kysely } from "kysely";
 import { faker } from "@faker-js/faker";
+import type { Kysely } from "kysely";
 import { DB } from "../src/lib/db-types";
 
 export async function seed(db: Kysely<DB>): Promise<void> {
@@ -16,7 +16,8 @@ export async function seed(db: Kysely<DB>): Promise<void> {
     .values({
       id: 1,
       username: faker.internet.userName(),
-      email: faker.internet.email(),
+      email: "admin@social.com",
+      password: "abc123",
       displayName: faker.internet.displayName(),
     })
     .returningAll()
@@ -30,6 +31,7 @@ export async function seed(db: Kysely<DB>): Promise<void> {
       .values({
         username: faker.internet.userName(),
         email: faker.internet.email(),
+        password: faker.internet.password(),
         displayName: faker.internet.displayName(),
       })
       .returningAll()

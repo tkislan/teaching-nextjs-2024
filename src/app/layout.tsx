@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
-import "./globals.css";
 import Link from "next/link";
+import "./globals.css";
+import { LogoutButton } from "./LogoutButton";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -42,6 +43,12 @@ export default function RootLayout({
               </li>
               <li>
                 <Link href="/profile">Profile</Link>
+              </li>
+              <li>
+                <Link href="/login">Login</Link>
+              </li>
+              <li>
+                <LogoutButton />
               </li>
             </ul>
           </div>
