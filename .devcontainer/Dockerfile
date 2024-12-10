@@ -1,5 +1,3 @@
-# syntax=docker/dockerfile:experimental
-
 ARG NODE_VERSION=20.5.1
 
 # ----------------------------------------
