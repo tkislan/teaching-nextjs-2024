@@ -1,7 +1,10 @@
-import { createDB } from "../lib/db";
 import Link from "next/link";
+import { checkAuth } from "../lib/auth";
+import { createDB } from "../lib/db";
 
 export default async function Home() {
+  const userId = checkAuth();
+
   const db = createDB();
 
   const posts = await db
@@ -21,7 +24,7 @@ export default async function Home() {
             </Link>
             <Link href={`/user/${p.userId}`}>
               {p.userId}
-              {p.userId === 1 ? " *" : ""}
+              {p.userId === userId ? " *" : ""}
             </Link>
           </div>
         </div>

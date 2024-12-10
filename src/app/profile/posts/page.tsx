@@ -1,13 +1,16 @@
-import { createDB } from "../../../lib/db";
 import Link from "next/link";
+import { assertAuth } from "../../../lib/auth";
+import { createDB } from "../../../lib/db";
 
 export default async function UserPosts() {
   const db = createDB();
 
+  const userId = assertAuth();
+
   const posts = await db
     .selectFrom("posts")
     .selectAll()
-    .where("userId", "=", 1)
+    .where("userId", "=", userId)
     .orderBy("createdAt desc")
     .execute();
 

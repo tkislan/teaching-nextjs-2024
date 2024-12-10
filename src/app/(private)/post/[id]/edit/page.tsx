@@ -1,4 +1,4 @@
-import { createDB } from "../../../../lib/db";
+import { createDB } from "../../../../../lib/db";
 import { EditPostForm } from "./EditPostForm";
 
 type Props = { params: { id: string } };

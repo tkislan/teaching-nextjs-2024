@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import Link from "next/link";
+import { checkAuth } from "../lib/auth";
 import "./globals.css";
 import { LogoutButton } from "./LogoutButton";
 
@@ -25,6 +26,8 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const userId = checkAuth();
+
   return (
     <html lang="en">
       <body
@@ -38,18 +41,24 @@ export default function RootLayout({
           </div>
           <div className="flex-none">
             <ul className="menu menu-horizontal px-1">
-              <li>
-                <Link href="/new-post">New Post</Link>
-              </li>
-              <li>
-                <Link href="/profile">Profile</Link>
-              </li>
-              <li>
-                <Link href="/login">Login</Link>
-              </li>
-              <li>
-                <LogoutButton />
-              </li>
+              {userId == null ? (
+                <li>
+                  <Link href="/login">Login</Link>
+                </li>
+              ) : null}
+              {userId != null ? (
+                <>
+                  <li>
+                    <Link href="/new-post">New Post</Link>
+                  </li>
+                  <li>
+                    <Link href="/profile">Profile</Link>
+                  </li>
+                  <li>
+                    <LogoutButton />
+                  </li>
+                </>
+              ) : null}
             </ul>
           </div>
         </div>
