@@ -22,6 +22,7 @@ export default async function UserProfile() {
         <p>{user.displayName}</p>
         <Link href="/profile/posts">My Posts</Link>
         <Link href="/profile/edit">Edit Profile</Link>
+        <Link href="/profile/change-password">Change Password</Link>
       </div>
     </div>
   );
