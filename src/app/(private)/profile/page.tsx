@@ -1,6 +1,6 @@
 import Link from "next/link";
-import { assertAuth } from "../../lib/auth";
-import { createDB } from "../../lib/db";
+import { assertAuth } from "../../../lib/auth";
+import { createDB } from "../../../lib/db";
 
 export default async function UserProfile() {
   const userId = assertAuth();

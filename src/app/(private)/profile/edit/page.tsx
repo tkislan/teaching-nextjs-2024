@@ -1,5 +1,5 @@
-import { assertAuth } from "../../../lib/auth";
-import { createDB } from "../../../lib/db";
+import { assertAuth } from "../../../../lib/auth";
+import { createDB } from "../../../../lib/db";
 import { EditProfileForm } from "./EditProfileForm";
 
 export default async function EditUserProfile() {

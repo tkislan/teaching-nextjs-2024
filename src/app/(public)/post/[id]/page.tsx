@@ -1,5 +1,6 @@
 import Link from "next/link";
-import { createDB } from "../../../lib/db";
+import { checkAuth } from "../../../../lib/auth";
+import { createDB } from "../../../../lib/db";
 import { DeletePostButton } from "./DeletePostButton";
 import { NewCommentForm } from "./NewCommentForm";
 
@@ -13,6 +14,8 @@ export default async function PostDetail(props: Props) {
   if (isNaN(id)) {
     return <div>Error: Invalid ID</div>;
   }
+
+  const userId = checkAuth();
 
   const db = createDB();
 
@@ -46,12 +49,14 @@ export default async function PostDetail(props: Props) {
         <Link href={`/user/${postWithUser.userId}`}>
           {postWithUser.displayName ?? postWithUser.username}
         </Link>
-        <div className="flex flex-row gap-4">
-          <Link className="btn btn-sm" href={`/post/${postWithUser.id}/edit`}>
-            Edit
-          </Link>
-          <DeletePostButton id={postWithUser.id} />
-        </div>
+        {postWithUser.userId === userId ? (
+          <div className="flex flex-row gap-4">
+            <Link className="btn btn-sm" href={`/post/${postWithUser.id}/edit`}>
+              Edit
+            </Link>
+            <DeletePostButton id={postWithUser.id} />
+          </div>
+        ) : null}
         <br />
         {commentsWithUsers.length === 0 ? <div>- No Comments - </div> : null}
         <ul className="list-disc">
@@ -64,7 +69,7 @@ export default async function PostDetail(props: Props) {
             </li>
           ))}
         </ul>
-        <NewCommentForm postId={postWithUser.id} />
+        {userId != null ? <NewCommentForm postId={postWithUser.id} /> : null}
       </div>
     </div>
   );

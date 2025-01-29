@@ -2,7 +2,7 @@
 
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
-import { createDB } from "../../lib/db";
+import { createDB } from "../../../lib/db";
 
 export async function login(email: string, password: string) {
   console.log(`Logging in user: ${email}, with password: ${password}`);

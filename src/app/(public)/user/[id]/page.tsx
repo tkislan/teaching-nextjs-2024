@@ -1,4 +1,4 @@
-import { createDB } from "../../../lib/db";
+import { createDB } from "../../../../lib/db";
 
 type Props = { params: { id: string } };
 

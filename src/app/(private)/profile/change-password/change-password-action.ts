@@ -1,8 +1,8 @@
 "use server";
 
 import { redirect } from "next/navigation";
-import { assertAuth } from "../../../lib/auth";
-import { createDB } from "../../../lib/db";
+import { assertAuth } from "../../../../lib/auth";
+import { createDB } from "../../../../lib/db";
 
 export async function changePassword(
   currentPassword: string,
