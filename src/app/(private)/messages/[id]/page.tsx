@@ -4,7 +4,7 @@ import { createDB } from "../../../../lib/db";
 type Props = { params: { id: string } };
 
 export default async function MessagesUserPage(props: Props) {
-  console.log("Edit post page:", props.params.id);
+  console.log("Messages with user id:", props.params.id);
 
   const id = parseInt(props.params.id);
 
