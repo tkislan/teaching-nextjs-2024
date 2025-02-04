@@ -3,6 +3,7 @@ import type { Kysely } from "kysely";
 import { DB } from "../src/lib/db-types";
 
 export async function seed(db: Kysely<DB>): Promise<void> {
+  await db.deleteFrom("messages").execute();
   await db.deleteFrom("comments").execute();
   await db.deleteFrom("posts").execute();
   await db.deleteFrom("users").execute();
@@ -73,6 +74,36 @@ export async function seed(db: Kysely<DB>): Promise<void> {
             createdAt: faker.date
               .between({ from: new Date(post.createdAt), to: new Date() })
               .getTime(),
+          })
+          .execute();
+      }
+    }
+  }
+
+  for (const fromUser of users) {
+    for (const toUser of users) {
+      if (fromUser.id === toUser.id) {
+        continue;
+      }
+
+      // const shouldCreateMessages = faker.datatype.boolean(0.2);
+
+      // if (!shouldCreateMessages) {
+      //   continue;
+      // }
+
+      const numberOfMessages = faker.number.int({ min: 1, max: 10 });
+
+      for (let i = 0; i < numberOfMessages; i += 1) {
+        const numberOfSenteces = faker.number.int({ min: 1, max: 3 });
+
+        await db
+          .insertInto("messages")
+          .values({
+            fromUserId: fromUser.id,
+            toUserId: toUser.id,
+            message: faker.lorem.sentences(numberOfSenteces),
+            createdAt: faker.date.recent({ days: 10 }).getTime(),
           })
           .execute();
       }

@@ -17,6 +17,14 @@ export interface Comments {
   userId: number;
 }
 
+export interface Messages {
+  createdAt: number;
+  fromUserId: number;
+  id: Generated<number>;
+  message: string;
+  toUserId: number;
+}
+
 export interface Posts {
   content: string;
   createdAt: number;
@@ -34,6 +42,7 @@ export interface Users {
 
 export interface DB {
   comments: Comments;
+  messages: Messages;
   posts: Posts;
   users: Users;
 }

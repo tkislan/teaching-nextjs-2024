@@ -60,6 +60,9 @@ export default function RootLayout({
                     <Link href="/profile">Profile</Link>
                   </li>
                   <li>
+                    <Link href="/messages">Message</Link>
+                  </li>
+                  <li>
                     <LogoutButton />
                   </li>
                 </>
