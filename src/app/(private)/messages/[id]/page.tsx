@@ -1,5 +1,7 @@
 import { assertAuth } from "../../../../lib/auth";
 import { createDB } from "../../../../lib/db";
+import { DeleteMessageButton } from "./DeleteMessageButton";
+import { SendMessageForm } from "./SendMessageForm";
 
 type Props = { params: { id: string } };
 
@@ -25,7 +27,7 @@ export default async function MessagesUserPage(props: Props) {
         eb.and([eb("toUserId", "=", userId), eb("fromUserId", "=", id)]),
       ])
     )
-    .orderBy("createdAt", "desc")
+    .orderBy("createdAt", "asc")
     .execute();
 
   return (
@@ -38,9 +40,26 @@ export default async function MessagesUserPage(props: Props) {
               m.fromUserId === userId ? "chat-end" : "chat-start"
             }`}
           >
-            <div className="chat-bubble chat-bubble-accent">{m.message}</div>
+            <div className="chat-header">
+              <time className="text-xs opacity-50">
+                {new Date(m.createdAt).toString()}
+              </time>
+            </div>
+            <div
+              className={`chat-bubble ${
+                m.fromUserId === userId
+                  ? "chat-bubble-info"
+                  : "chat-bubble-accent"
+              }`}
+            >
+              {m.message}
+            </div>
+            {m.fromUserId === userId ? (
+              <DeleteMessageButton id={m.id} toUserId={id} />
+            ) : null}
           </div>
         ))}
+        <SendMessageForm toUserId={id} />
       </div>
     </div>
   );
