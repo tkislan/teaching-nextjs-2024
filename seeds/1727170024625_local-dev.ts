@@ -6,6 +6,7 @@ export async function seed(db: Kysely<DB>): Promise<void> {
   await db.deleteFrom("messages").execute();
   await db.deleteFrom("comments").execute();
   await db.deleteFrom("posts").execute();
+  await db.deleteFrom("marketplace").execute();
   await db.deleteFrom("users").execute();
 
   const numberOfUsers = 20;
@@ -80,33 +81,62 @@ export async function seed(db: Kysely<DB>): Promise<void> {
     }
   }
 
-  for (const fromUser of users) {
-    for (const toUser of users) {
-      if (fromUser.id === toUser.id) {
-        continue;
+  const messageUsersPairs = [];
+  for (let i = 0; i < users.length; i += 1) {
+    for (let j = i + 1; j < users.length; j += 1) {
+      const shouldCreateMessages = faker.datatype.boolean(0.2);
+
+      if (shouldCreateMessages === true) {
+        messageUsersPairs.push([users[i].id, users[j].id]);
       }
+    }
+  }
 
-      // const shouldCreateMessages = faker.datatype.boolean(0.2);
+  for (const pair of messageUsersPairs) {
+    const numberOfMessages01 = faker.number.int({ min: 0, max: 10 });
+    const numberOfMessages10 = faker.number.int({ min: 0, max: 10 });
 
-      // if (!shouldCreateMessages) {
-      //   continue;
-      // }
+    for (let i = 0; i < numberOfMessages01; i += 1) {
+      const numberOfSenteces = faker.number.int({ min: 1, max: 3 });
 
-      const numberOfMessages = faker.number.int({ min: 1, max: 10 });
+      await db
+        .insertInto("messages")
+        .values({
+          fromUserId: pair[0],
+          toUserId: pair[1],
+          message: faker.lorem.sentences(numberOfSenteces),
+          createdAt: faker.date.recent({ days: 10 }).getTime(),
+        })
+        .execute();
+    }
 
-      for (let i = 0; i < numberOfMessages; i += 1) {
-        const numberOfSenteces = faker.number.int({ min: 1, max: 3 });
+    for (let i = 0; i < numberOfMessages10; i += 1) {
+      const numberOfSenteces = faker.number.int({ min: 1, max: 3 });
 
-        await db
-          .insertInto("messages")
-          .values({
-            fromUserId: fromUser.id,
-            toUserId: toUser.id,
-            message: faker.lorem.sentences(numberOfSenteces),
-            createdAt: faker.date.recent({ days: 10 }).getTime(),
-          })
-          .execute();
-      }
+      await db
+        .insertInto("messages")
+        .values({
+          fromUserId: pair[1],
+          toUserId: pair[0],
+          message: faker.lorem.sentences(numberOfSenteces),
+          createdAt: faker.date.recent({ days: 10 }).getTime(),
+        })
+        .execute();
+    }
+  }
+
+  for (const user of users) {
+    const numberOfMarketplaceItems = faker.number.int({ min: 0, max: 2 });
+
+    for (let i = 0; i < numberOfMarketplaceItems; i += 1) {
+      await db.insertInto("marketplace").values({
+        userId: user.id,
+        name: faker.commerce.productName(),
+        description: faker.commerce.productDescription(),
+        category: faker.commerce.department(),
+        price: faker.number.int({ min: 1, max: 1000 }),
+        createdAt: faker.date.recent({ days: 10 }).getTime(),
+      }).execute();
     }
   }
 }

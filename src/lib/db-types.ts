@@ -17,6 +17,16 @@ export interface Comments {
   userId: number;
 }
 
+export interface Marketplace {
+  category: string;
+  createdAt: number;
+  description: string;
+  id: Generated<number>;
+  name: string;
+  price: number;
+  userId: number;
+}
+
 export interface Messages {
   createdAt: number;
   fromUserId: number;
@@ -42,6 +52,7 @@ export interface Users {
 
 export interface DB {
   comments: Comments;
+  marketplace: Marketplace;
   messages: Messages;
   posts: Posts;
   users: Users;

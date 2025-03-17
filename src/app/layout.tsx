@@ -41,6 +41,9 @@ export default function RootLayout({
           </div>
           <div className="flex-none">
             <ul className="menu menu-horizontal px-1">
+              <li>
+                <Link href="/marketplace">Marketplace</Link>
+              </li>
               {userId == null ? (
                 <>
                   <li>
