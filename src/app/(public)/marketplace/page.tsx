@@ -18,6 +18,8 @@ export default async function MarketplacePage({ searchParams }: Props) {
       : null;
   const searchText =
     searchParams["searchText"] != null ? searchParams["searchText"] : null;
+  const category =
+    searchParams["category"] != null ? searchParams["category"] : null;
 
   const db = createDB();
 
@@ -40,6 +42,9 @@ export default async function MarketplacePage({ searchParams }: Props) {
       ])
     );
   }
+  if (category != null) {
+    query = query.where("category", "=", category);
+  }
 
   const marketplace = await query.execute();
 
@@ -49,6 +54,7 @@ export default async function MarketplacePage({ searchParams }: Props) {
         initialPriceFrom={searchParams["priceFrom"] ?? null}
         initialPriceTo={searchParams["priceTo"] ?? null}
         initialSearchText={searchParams["searchText"] ?? null}
+        initialCategory={searchParams["category"] ?? null}
       />
       {marketplace.map((p) => (
         <div key={p.id} className="card bg-base-100 w-96 drop-shadow-md">

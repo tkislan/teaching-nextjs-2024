@@ -1,5 +1,6 @@
 import { faker } from "@faker-js/faker";
 import type { Kysely } from "kysely";
+import { MARKETPLACE_CATEGORIES } from "../src/lib/db-constants";
 import { DB } from "../src/lib/db-types";
 
 export async function seed(db: Kysely<DB>): Promise<void> {
@@ -129,14 +130,19 @@ export async function seed(db: Kysely<DB>): Promise<void> {
     const numberOfMarketplaceItems = faker.number.int({ min: 0, max: 2 });
 
     for (let i = 0; i < numberOfMarketplaceItems; i += 1) {
-      await db.insertInto("marketplace").values({
-        userId: user.id,
-        name: faker.commerce.productName(),
-        description: faker.commerce.productDescription(),
-        category: faker.commerce.department(),
-        price: faker.number.int({ min: 1, max: 1000 }),
-        createdAt: faker.date.recent({ days: 10 }).getTime(),
-      }).execute();
+      await db
+        .insertInto("marketplace")
+        .values({
+          userId: user.id,
+          name: faker.commerce.productName(),
+          description: faker.commerce.productDescription(),
+          category: faker.helpers.arrayElement(
+            Object.keys(MARKETPLACE_CATEGORIES)
+          ),
+          price: faker.number.int({ min: 1, max: 1000 }),
+          createdAt: faker.date.recent({ days: 10 }).getTime(),
+        })
+        .execute();
     }
   }
 }
