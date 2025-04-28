@@ -20,6 +20,9 @@ export default async function Home() {
           <div className="card-body">
             <Link href={`/post/${p.id}`}>
               <p>{p.content}</p>
+              {p.photoUrl != null && p.photoUrl.length > 0 ? (
+                <img src={p.photoUrl} alt="Post photo" />
+              ) : null}
               <p>{new Date(p.createdAt).toString()}</p>
             </Link>
             <Link href={`/user/${p.userId}`}>

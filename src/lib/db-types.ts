@@ -39,6 +39,7 @@ export interface Posts {
   content: string;
   createdAt: number;
   id: Generated<number>;
+  photoUrl: string | null;
   userId: number;
 }
 

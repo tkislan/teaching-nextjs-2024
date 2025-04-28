@@ -45,6 +45,9 @@ export default async function PostDetail(props: Props) {
         <div style={{ whiteSpace: "break-spaces" }}>
           <p>{postWithUser.content}</p>
         </div>
+        {postWithUser.photoUrl != null && postWithUser.photoUrl.length > 0 ? (
+          <img src={postWithUser.photoUrl} alt="Post photo" />
+        ) : null}
         <p>{new Date(postWithUser.createdAt).toLocaleString()}</p>
         <Link href={`/user/${postWithUser.userId}`}>
           {postWithUser.displayName ?? postWithUser.username}

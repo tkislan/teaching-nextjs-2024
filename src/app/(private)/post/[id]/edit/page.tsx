@@ -29,7 +29,11 @@ export default async function EditPostPage(props: Props) {
   return (
     <div className="card bg-base-100 w-96 drop-shadow-md">
       <div className="card-body">
-        <EditPostForm id={post.id} content={post.content} />
+        <EditPostForm
+          id={post.id}
+          content={post.content}
+          photoUrl={post.photoUrl}
+        />
       </div>
     </div>
   );

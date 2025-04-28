@@ -21,6 +21,9 @@ export default async function UserPosts() {
           <Link href={`/post/${p.id}`}>
             <div className="card-body">
               <p>{p.content}</p>
+              {p.photoUrl != null && p.photoUrl.length > 0 ? (
+                <img src={p.photoUrl} alt="Post photo" />
+              ) : null}
               <p>{new Date(p.createdAt).toString()}</p>
               <p>{p.userId}</p>
             </div>

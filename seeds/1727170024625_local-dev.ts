@@ -48,11 +48,14 @@ export async function seed(db: Kysely<DB>): Promise<void> {
     const numberOfPosts = faker.number.int({ min: 0, max: 20 });
 
     for (let i = 0; i < numberOfPosts; i++) {
+      const hasPhoto = faker.datatype.boolean(0.5);
+
       const post = await db
         .insertInto("posts")
         .values({
           userId: user.id,
           content: faker.lorem.sentences(2),
+          photoUrl: hasPhoto ? faker.image.url() : null,
           createdAt: faker.date.recent({ days: 10 }).getTime(),
         })
         .returningAll()
