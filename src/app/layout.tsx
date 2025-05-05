@@ -60,6 +60,9 @@ export default function RootLayout({
                     <Link href="/new-post">New Post</Link>
                   </li>
                   <li>
+                    <Link href="/new-marketplace">New Marketplace</Link>
+                  </li>
+                  <li>
                     <Link href="/profile">Profile</Link>
                   </li>
                   <li>

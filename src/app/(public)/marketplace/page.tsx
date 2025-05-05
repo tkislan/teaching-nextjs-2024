@@ -25,7 +25,14 @@ export default async function MarketplacePage({ searchParams }: Props) {
 
   let query = db
     .selectFrom("marketplace")
-    .selectAll()
+    .leftJoin(
+      "marketplacePhotos",
+      "marketplace.id",
+      "marketplacePhotos.marketplaceId"
+    )
+    .selectAll("marketplace")
+    .select(["marketplacePhotos.photoUrl"])
+    .groupBy("marketplace.id")
     .orderBy("createdAt desc");
 
   if (priceFrom != null) {
@@ -60,6 +67,13 @@ export default async function MarketplacePage({ searchParams }: Props) {
         <div key={p.id} className="card bg-base-100 w-96 drop-shadow-md">
           <div className="card-body">
             <p>Name: {p.name}</p>
+            {p.photoUrl != null ? (
+              <img
+                src={p.photoUrl}
+                alt={p.name}
+                className="w-full h-48 object-cover"
+              />
+            ) : null}
             <p>Description: {p.description}</p>
             <p>Category: {p.category}</p>
             <p>Price: {p.price}</p>

@@ -7,6 +7,7 @@ export async function seed(db: Kysely<DB>): Promise<void> {
   await db.deleteFrom("messages").execute();
   await db.deleteFrom("comments").execute();
   await db.deleteFrom("posts").execute();
+  await db.deleteFrom("marketplacePhotos").execute();
   await db.deleteFrom("marketplace").execute();
   await db.deleteFrom("users").execute();
 
@@ -133,7 +134,7 @@ export async function seed(db: Kysely<DB>): Promise<void> {
     const numberOfMarketplaceItems = faker.number.int({ min: 0, max: 2 });
 
     for (let i = 0; i < numberOfMarketplaceItems; i += 1) {
-      await db
+      const marketplace = await db
         .insertInto("marketplace")
         .values({
           userId: user.id,
@@ -145,7 +146,21 @@ export async function seed(db: Kysely<DB>): Promise<void> {
           price: faker.number.int({ min: 1, max: 1000 }),
           createdAt: faker.date.recent({ days: 10 }).getTime(),
         })
-        .execute();
+        .returningAll()
+        .executeTakeFirstOrThrow();
+
+      const numberOfPhotos = faker.number.int({ min: 0, max: 3 });
+
+      for (let i = 0; i < numberOfPhotos; i += 1) {
+        await db
+          .insertInto("marketplacePhotos")
+          .values({
+            marketplaceId: marketplace.id,
+            photoUrl: faker.image.url(),
+            createdAt: faker.date.recent({ days: 10 }).getTime(),
+          })
+          .execute();
+      }
     }
   }
 }

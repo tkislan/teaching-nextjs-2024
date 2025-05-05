@@ -27,6 +27,13 @@ export interface Marketplace {
   userId: number;
 }
 
+export interface MarketplacePhotos {
+  createdAt: number;
+  id: Generated<number>;
+  marketplaceId: number;
+  photoUrl: string;
+}
+
 export interface Messages {
   createdAt: number;
   fromUserId: number;
@@ -54,6 +61,7 @@ export interface Users {
 export interface DB {
   comments: Comments;
   marketplace: Marketplace;
+  marketplacePhotos: MarketplacePhotos;
   messages: Messages;
   posts: Posts;
   users: Users;
