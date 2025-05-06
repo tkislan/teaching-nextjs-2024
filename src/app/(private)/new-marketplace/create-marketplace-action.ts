@@ -28,16 +28,18 @@ export async function createMarketplace(
     .returningAll()
     .executeTakeFirstOrThrow();
 
-  await db
-    .insertInto("marketplacePhotos")
-    .values(
-      photoUrls.map((photoUrl) => ({
-        marketplaceId: newMarketplace.id,
-        photoUrl,
-        createdAt: new Date().getTime(),
-      }))
-    )
-    .execute();
+  if (photoUrls.length > 0) {
+    await db
+      .insertInto("marketplacePhotos")
+      .values(
+        photoUrls.map((photoUrl) => ({
+          marketplaceId: newMarketplace.id,
+          photoUrl,
+          createdAt: new Date().getTime(),
+        }))
+      )
+      .execute();
+  }
 
   redirect(`/marketplace`);
 }
